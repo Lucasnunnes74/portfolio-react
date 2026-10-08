@@ -1,0 +1,21 @@
+.about { display: grid; grid-template-columns: minmax(260px, 1fr) 1.7fr; gap: 3rem; align-items: start; }
+.about__side { display: grid; gap: 1.5rem; justify-items: center; }
+.about__avatar {
+  width: min(260px, 70%); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--card);
+  border: 3px solid var(--red); box-shadow: 0 0 40px rgba(255, 45, 85, .3), 0 0 80px rgba(124, 58, 237, .25);
+}
+.about__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about__facts { width: 100%; padding: 1.2rem 1.4rem; display: grid; gap: .9rem; }
+.about__facts dt { font: 500 .7rem var(--mono); color: var(--purple); text-transform: uppercase; letter-spacing: .06em; }
+.about__facts dd { font-size: .92rem; }
+.about__main { display: grid; gap: 1.1rem; color: var(--muted); font-size: 1rem; }
+.about__sub { color: var(--text); font-size: 1.15rem; font-weight: 800; margin-top: .6rem; }
+.about__skills { list-style: none; display: grid; gap: .3rem; }
+.about__skills li { display: flex; gap: .75rem; align-items: flex-start; padding: .7rem 0; border-bottom: 1px solid var(--border); font-size: .92rem; }
+.about__skills li:last-child { border-bottom: 0; }
+.about__skills strong { color: var(--text); }
+.about__check {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; margin-top: .1rem;
+  background: linear-gradient(135deg, var(--red), var(--violet)); color: #fff; font-size: .65rem;
+}
+@media (max-width: 800px) { .about { grid-template-columns: 1fr; gap: 2rem; } }

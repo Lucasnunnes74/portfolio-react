@@ -1,0 +1,11 @@
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
+.projects > .reveal { display: grid; }
+.project { padding: 1.6rem; display: grid; gap: .7rem; align-content: start; position: relative; overflow: hidden; transition: border-color .25s, transform .25s; }
+.project::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--violet)); }
+.project:hover { border-color: var(--violet); transform: translateY(-3px); }
+.project__context { font: 500 .72rem var(--mono); color: var(--red); }
+.project h3 { font-size: 1.2rem; font-weight: 800; line-height: 1.25; }
+.project p { color: var(--muted); font-size: .9rem; }
+.project__tech { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .4rem; }
+.project__link { color: var(--purple); font-weight: 700; font-size: .85rem; width: fit-content; margin-top: .4rem; }
+.project__link:hover { color: var(--text); }

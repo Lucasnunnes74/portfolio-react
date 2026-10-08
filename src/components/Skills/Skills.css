@@ -1,0 +1,12 @@
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem; }
+.skills > .reveal { display: grid; }
+.skills__card { padding: 1.5rem; display: grid; gap: .5rem; align-content: start; transition: border-color .25s, transform .25s; }
+.skills__card:hover { border-color: var(--violet); transform: translateY(-3px); }
+.skills__card h3 { font-size: 1.15rem; font-weight: 800; }
+.skills__card p { color: var(--muted); font-size: .85rem; margin-bottom: .6rem; }
+.skills__chips { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip {
+  display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .75rem; border-radius: 999px;
+  font: 500 .75rem var(--mono); background: rgba(255, 255, 255, .04); border: 1px solid var(--border); color: #d5d1e0;
+}
+.chip img { object-fit: contain; }
