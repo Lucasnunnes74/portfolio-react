@@ -1,7 +1,7 @@
 import { faArrowRight, faFileArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faGithub, faLinkedinIn, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import heroImg from '../../assets/imagens/perfil-banner.png'
+import heroImg from '../../assets/imagens/perfil-banner.jpg'
 import { profile, stats } from '../../data/portfolio'
 import './Hero.css'
 
@@ -47,7 +47,9 @@ export default function Hero() {
       </div>
       <div className="hero__visual">
         <div className="hero__glow" aria-hidden="true" />
-        <img src={heroImg} alt={`Ilustração de ${profile.name}`} className="hero__img" fetchPriority="high" />
+        <div className="hero__frame">
+          <img src={heroImg} alt={`Foto de ${profile.name}`} className="hero__img" fetchPriority="high" />
+        </div>
       </div>
       <ul className="hero__stats">
         {stats.map((s) => (
