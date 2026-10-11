@@ -39,7 +39,9 @@
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; grid-template-areas: 'visual' 'text' 'stats'; min-height: 0; padding-top: 6rem; }
-  .hero__frame { width: min(280px, 75%); }
+  .hero__frame { width: 100%; }
+  .hero__frame::before {display: none;}
+  .hero__img {    aspect-ratio: 5 / 5;}
   .hero__stats { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .hero__cursor, .hero__dot { animation: none; } }
