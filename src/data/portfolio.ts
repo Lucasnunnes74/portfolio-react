@@ -58,7 +58,7 @@ export const aboutParagraphs: string[] = [
 export const aboutFacts: { label: string; value: string }[] = [
   { label: 'Localização', value: 'Itapevi, SP' },
   { label: 'Foco atual', value: 'React · Next.js · TypeScript' },
-  { label: 'Idiomas', value: 'Português (nativo) · Inglês (intermediário)' },
+  { label: 'Idiomas', value: 'Português (nativo) · Inglês (A2, Básico)' },
   { label: 'Busco', value: 'Front-end Júnior · Remoto/Híbrido' },
 ]
 
