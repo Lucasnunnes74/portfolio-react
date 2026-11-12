@@ -1,0 +1,43 @@
+.scene3d {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: transparent;
+  opacity: 0;
+  animation: scene3d-in 1.4s ease-out 0.1s forwards;
+  /* faixa central (onde fica o texto) fica calma; a cena aparece nas laterais */
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.2) 18%, rgba(0, 0, 0, 0.2) 82%, #000 100%);
+  mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.2) 18%, rgba(0, 0, 0, 0.2) 82%, #000 100%);
+}
+
+.scene3d canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes scene3d-in {
+  to {
+    opacity: 0.6;
+  }
+}
+
+/* celular: não há laterais livres, então a cena fica bem mais discreta */
+@media (max-width: 900px) {
+  .scene3d {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  @keyframes scene3d-in {
+    to {
+      opacity: 0.28;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene3d {
+    animation-duration: 0.01s;
+  }
+}

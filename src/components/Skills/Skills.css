@@ -1,12 +1,20 @@
-.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem; }
-.skills > .reveal { display: grid; }
-.skills__card { padding: 1.5rem; display: grid; gap: .5rem; align-content: start; transition: border-color .25s, transform .25s; }
-.skills__card:hover { border-color: var(--violet); transform: translateY(-3px); }
-.skills__card h3 { font-size: 1.15rem; font-weight: 800; }
-.skills__card p { color: var(--muted); font-size: .85rem; margin-bottom: .6rem; }
-.skills__chips { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; }
+.skills { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; align-items: start; padding-bottom: 2.5rem; }
+.skills__item { grid-column: span 6; min-width: 0; }
+.skills__item .fx-rise, .skills__tilt { height: 100%; }
+.skills__card { padding: 1.7rem; display: grid; gap: .5rem; align-content: start; height: 100%; transform-style: preserve-3d; }
+.skills__card h3 { font-size: 1.25rem; font-weight: 800; }
+.skills__card p { color: var(--muted); font-size: .88rem; margin-bottom: .8rem; }
+.skills__idx { position: absolute; top: .8rem; right: 1.1rem; font: 800 2.6rem var(--mono); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(167, 139, 250, .3); }
+.skills__chips { list-style: none; display: flex; flex-wrap: wrap; gap: .55rem; perspective: 600px; }
 .chip {
-  display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .75rem; border-radius: 999px;
-  font: 500 .75rem var(--mono); background: rgba(255, 255, 255, .04); border: 1px solid var(--border); color: #d5d1e0;
+  display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .85rem; border-radius: 999px;
+  font: 500 .78rem var(--mono); background: rgba(255, 255, 255, .05); border: 1px solid var(--border); color: #d5d1e0;
+  transition: border-color .2s, color .2s, box-shadow .2s;
 }
 .chip img { object-fit: contain; }
+@media (hover: hover) { .chip:hover { border-color: var(--purple); color: #fff; box-shadow: 0 0 16px rgba(124, 58, 237, .45); } }
+@media (min-width: 900px) {
+  .skills__item--wide { grid-column: span 4; }
+  .skills__item--thin { grid-column: span 2; }
+  .skills__item--half { grid-column: span 3; }
+}

@@ -4,7 +4,7 @@
   transition: background .25s, border-color .25s, backdrop-filter .25s;
 }
 .header.is-solid {
-  background: rgba(7, 6, 11, .82); border-bottom-color: var(--border);
+  background: rgba(7, 6, 11, .97); border-bottom-color: var(--border);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
 }
 .header__inner {

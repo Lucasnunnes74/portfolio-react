@@ -21,3 +21,14 @@
 .form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .form .btn:disabled { opacity: .6; cursor: progress; transform: none; }
 @media (max-width: 800px) { .contact { grid-template-columns: 1fr; } }
+
+.cta { padding: 2.2rem 1.8rem; margin-bottom: 2rem; text-align: center; display: grid; gap: 1.2rem; justify-items: center; }
+.cta__status { display: inline-flex; align-items: center; gap: .55rem; font: 500 .78rem var(--mono); color: #34d399; }
+.cta__status i { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 10px #34d399; animation: fx-pulse 1.8s ease-in-out infinite; }
+.cta__title { font-size: clamp(1.5rem, 4.2vw, 2.6rem); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; max-width: 22ch; }
+.cta__actions { display: flex; flex-wrap: wrap; gap: .6rem 1rem; justify-content: center; }
+.cta__btn { min-height: 48px; }
+.contact__channel { min-height: 64px; }
+.contact__info { display: grid; gap: 1rem; }
+@keyframes fx-pulse { 50% { opacity: .35; transform: scale(.7); } }
+@media (prefers-reduced-motion: reduce) { .cta__status i { animation: none; } }

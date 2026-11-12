@@ -56,3 +56,27 @@ img { max-width: 100%; }
   .section { padding: 4.5rem 0 3.5rem; }
   .container, .container--wide { width: min(100% - 2rem, 1200px); }
 }
+
+/* ===== camada tech ===== */
+.gradient-text { background: linear-gradient(90deg, var(--red), var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+  background-image:
+    linear-gradient(rgba(167, 139, 250, .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 139, 250, .05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000, transparent 85%);
+}
+/* spotlight que segue o cursor nos cards (--mx/--my definidos em useSpotlight) */
+.card { position: relative; overflow: hidden; transition: border-color .25s, transform .25s; }
+.card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(167, 139, 250, .16), transparent 60%);
+}
+@media (hover: hover) {
+  .card:hover { border-color: rgba(167, 139, 250, .45); }
+  .card:hover::after { opacity: 1; }
+}
+.progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; transform-origin: 0 50%; background: linear-gradient(90deg, var(--red), var(--violet)); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

@@ -1,10 +1,15 @@
 import type { ExperienceItem } from '../../types'
 
-export default function ExperienceCard({ period, duration, role, company, location, summary, highlights }: ExperienceItem) {
+export default function ExperienceCard({ period, duration, role, company, location, summary, highlights, current }: ExperienceItem) {
   return (
-    <article className="card exp-card">
+    <article className="card fx-surface exp-card">
       <header className="exp-card__head">
         <div>
+          {current && (
+            <span className="exp-card__live">
+              <i aria-hidden="true" /> Atual
+            </span>
+          )}
           <h3 className="exp-card__role">{role}</h3>
           <p className="exp-card__company">
             {company} <span>· {location}</span>

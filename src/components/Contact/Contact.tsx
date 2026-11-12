@@ -1,9 +1,11 @@
 import { faGithub, faLinkedinIn, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faFileArrowDown, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { profile } from '../../data/portfolio'
-import Reveal from '../Reveal/Reveal'
+import Magnetic from '../fx/Magnetic'
+import Rise from '../fx/Rise'
+import TiltCard from '../fx/TiltCard'
 import SectionHeading from '../SectionHeading/SectionHeading'
 import './Contact.css'
 
@@ -17,7 +19,7 @@ type Status = 'idle' | 'sending' | 'success' | 'error' | 'mailto'
 const channels = [
   { label: 'E-mail', value: profile.email, href: `mailto:${profile.email}`, icon: faEnvelope },
   { label: 'WhatsApp', value: profile.phone, href: profile.whatsapp, icon: faWhatsapp },
-  { label: 'LinkedIn', value: 'lucas-santosda-silva', href: profile.linkedin, icon: faLinkedinIn },
+  { label: 'LinkedIn', value: 'lucas-santos-da-silva', href: profile.linkedin, icon: faLinkedinIn },
   { label: 'GitHub', value: 'Lucasnunnes74', href: profile.github, icon: faGithub },
 ]
 
@@ -71,31 +73,60 @@ export default function Contact() {
     <section id="contato" className="section container container--wide">
       <SectionHeading
         tag="contato.send()"
-        subtitle="Estou aberto a oportunidades como Desenvolvedor Front-end Júnior com React e Next.js. Vamos conversar?"
+        subtitle={`${profile.availability}. Vamos conversar?`}
       >
         Entre em contato
       </SectionHeading>
+      <Rise>
+        <div className="cta card fx-surface">
+          <p className="cta__status">
+            <i aria-hidden="true" /> Disponível para novas oportunidades
+          </p>
+          <p className="cta__title">
+            Vamos construir <span className="gradient-text">algo rápido, acessível e visível</span> juntos?
+          </p>
+          <div className="cta__actions">
+            <Magnetic>
+              <a className="btn btn--primary cta__btn" href={`mailto:${profile.email}`}>
+                <FontAwesomeIcon icon={faEnvelope} /> Enviar e-mail
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a className="btn btn--ghost cta__btn" href={profile.whatsapp} target="_blank" rel="noreferrer noopener">
+                <FontAwesomeIcon icon={faWhatsapp} /> WhatsApp
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a className="btn btn--ghost cta__btn" href={profile.cv} target="_blank" rel="noreferrer noopener">
+                <FontAwesomeIcon icon={faFileArrowDown} /> Currículo
+              </a>
+            </Magnetic>
+          </div>
+        </div>
+      </Rise>
       <div className="contact">
-        <Reveal className="contact__info">
+        <Rise x={-30} className="contact__info">
           <ul className="contact__list">
             {channels.map((c) => (
               <li key={c.label}>
-                <a href={c.href} target={c.href.startsWith('mailto') ? undefined : '_blank'} rel="noreferrer noopener" className="card contact__channel">
-                  <span className="contact__icon" aria-hidden="true"><FontAwesomeIcon icon={c.icon} /></span>
-                  <span>
-                    <small>{c.label}</small>
-                    <strong>{c.value}</strong>
-                  </span>
-                </a>
+                <TiltCard max={2}>
+                  <a href={c.href} target={c.href.startsWith('mailto') ? undefined : '_blank'} rel="noreferrer noopener" className="card fx-surface contact__channel">
+                    <span className="contact__icon" aria-hidden="true"><FontAwesomeIcon icon={c.icon} /></span>
+                    <span>
+                      <small>{c.label}</small>
+                      <strong>{c.value}</strong>
+                    </span>
+                  </a>
+                </TiltCard>
               </li>
             ))}
           </ul>
           <p className="contact__loc">
             <FontAwesomeIcon icon={faLocationDot} /> {profile.location}
           </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <form className="form card" onSubmit={submit}>
+        </Rise>
+        <Rise delay={0.1} x={30}>
+          <form className="form card fx-surface" onSubmit={submit}>
             <label>Nome<input required autoComplete="name" value={form.nome} onChange={set('nome')} /></label>
             <label>E-mail<input required type="email" autoComplete="email" value={form.email} onChange={set('email')} /></label>
             <label>Telefone (opcional)<input type="tel" autoComplete="tel" value={form.telefone} onChange={set('telefone')} /></label>
@@ -126,7 +157,7 @@ export default function Contact() {
               )}
             </div>
           </form>
-        </Reveal>
+        </Rise>
       </div>
     </section>
   )

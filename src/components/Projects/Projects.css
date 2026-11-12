@@ -1,11 +1,28 @@
-.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
-.projects > .reveal { display: grid; }
-.project { padding: 1.6rem; display: grid; gap: .7rem; align-content: start; position: relative; overflow: hidden; transition: border-color .25s, transform .25s; }
-.project::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--violet)); }
-.project:hover { border-color: var(--violet); transform: translateY(-3px); }
+.projects { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
+.projects__item { grid-column: span 6; min-width: 0; }
+.projects__item .fx-rise, .projects__item .edge { height: 100%; }
+/* borda em gradiente animada: um conic-gradient girando (transform) atrás do cartão */
+.edge { position: relative; padding: 1px; border-radius: 17px; overflow: hidden; background: var(--border); isolation: isolate; }
+.edge::before {
+  content: ''; position: absolute; top: 50%; left: 50%; width: 200%; aspect-ratio: 1; margin: -100% 0 0 -100%; z-index: -1; opacity: .35;
+  background: conic-gradient(from 0deg, transparent 0 55%, var(--red), var(--violet) 80%, transparent);
+  animation: fx-spin 6s linear infinite; transition: opacity .3s;
+}
+@media (hover: hover) { .edge:hover::before { opacity: 1; } }
+.project { padding: 1.7rem; display: grid; gap: .7rem; align-content: start; height: 100%; border: 0; border-radius: 16px; background: rgba(12, 10, 18, .88); }
+.project:hover { border-color: transparent; }
+.project__no { position: absolute; top: .6rem; right: 1.1rem; font: 800 3rem var(--mono); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255, 45, 85, .35); }
 .project__context { font: 500 .72rem var(--mono); color: var(--red); }
-.project h3 { font-size: 1.2rem; font-weight: 800; line-height: 1.25; }
-.project p { color: var(--muted); font-size: .9rem; }
+.project h3 { font-size: 1.25rem; font-weight: 800; line-height: 1.25; padding-right: 3rem; }
+.project p { color: var(--muted); font-size: .92rem; }
 .project__tech { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .4rem; }
-.project__link { color: var(--purple); font-weight: 700; font-size: .85rem; width: fit-content; margin-top: .4rem; }
+.project__link { color: var(--purple); font-weight: 700; font-size: .85rem; width: fit-content; margin-top: .4rem; min-height: 44px; display: inline-flex; align-items: center; gap: .4rem; }
 .project__link:hover { color: var(--text); }
+@keyframes fx-spin { to { transform: rotate(360deg); } }
+@media (min-width: 900px) {
+  .projects__item { grid-column: span 2; }
+  .projects__item--big { grid-column: span 3; }
+  .projects__item--big .project { padding: 2rem; }
+  .projects__item--big h3 { font-size: 1.45rem; }
+}
+@media (prefers-reduced-motion: reduce) { .edge::before { animation: none; opacity: .6; } }

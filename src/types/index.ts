@@ -48,3 +48,7 @@ export interface Stat {
   value: string
   label: string
 }
+
+export interface CertificationItem {
+  title: string
+}
