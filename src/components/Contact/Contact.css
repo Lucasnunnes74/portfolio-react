@@ -19,6 +19,14 @@
 .form__err { color: #fca5a5; text-align: center; font-size: .88rem; }
 .form__link { background: none; border: 0; padding: 0; color: var(--purple); font: inherit; text-decoration: underline; cursor: pointer; }
 .form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form__fields { display: grid; gap: 1.1rem; border: 0; padding: 0; margin: 0; min-width: 0; transition: opacity .2s; }
+.form__fields:disabled { opacity: .55; }
+.form__count { justify-self: end; font-size: .68rem; color: var(--muted); }
+.form__loading { display: flex; align-items: center; justify-content: center; gap: .5rem; color: var(--purple); text-align: center; font-size: .88rem; }
+.form .btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; }
+.spinner { width: 1em; height: 1em; border: 2px solid rgba(255, 255, 255, .35); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2s; } }
 .form .btn:disabled { opacity: .6; cursor: progress; transform: none; }
 @media (max-width: 800px) { .contact { grid-template-columns: 1fr; } }
 

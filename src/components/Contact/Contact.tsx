@@ -14,7 +14,24 @@ const empty = { nome: '', email: '', telefone: '', mensagem: '' }
 // URL de produção do webhook do n8n (ver .env.example)
 const WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL as string | undefined
 
-type Status = 'idle' | 'sending' | 'success' | 'error' | 'mailto'
+const MAX_MSG = 1000
+
+/** Máscara de telefone BR: (11) 99999-9999 ou (11) 9999-9999 */
+const maskPhone = (v: string) => {
+  const d = v.replace(/\D/g, '').slice(0, 11)
+  if (d.length <= 2) return d ? `(${d}` : ''
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
+}
+
+/** Nome: só letras, espaços, apóstrofo e hífen; sem espaços duplicados */
+const maskName = (v: string) =>
+  v.replace(/[^\p{L}\s'-]/gu, '').replace(/\s{2,}/g, ' ').replace(/^\s+/, '').slice(0, 80)
+
+const maskEmail = (v: string) => v.replace(/\s/g, '').toLowerCase().slice(0, 120)
+
+type Status ='idle' | 'sending' | 'success' | 'error' | 'mailto'
 
 const channels = [
   { label: 'E-mail', value: profile.email, href: `mailto:${profile.email}`, icon: faEnvelope },
@@ -28,8 +45,17 @@ export default function Contact() {
   const [status, setStatus] = useState<Status>('idle')
   const [honeypot, setHoneypot] = useState('')
 
-  const set = (k: keyof typeof empty) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }))
+  const masks: Record<keyof typeof empty, (v: string) => string> = {
+    nome: maskName,
+    email: maskEmail,
+    telefone: maskPhone,
+    mensagem: (v) => v.slice(0, MAX_MSG),
+  }
+  const set = (k: keyof typeof empty) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = masks[k](e.target.value)
+    setForm((f) => ({ ...f, [k]: value }))
+    if (status !== 'sending' && status !== 'idle') setStatus('idle')
+  }
 
   const openMailClient = () => {
     const body = `${form.mensagem}\n\n${form.nome}\n${form.email}\n${form.telefone}`
@@ -126,11 +152,17 @@ export default function Contact() {
           </p>
         </Rise>
         <Rise delay={0.1} x={30}>
-          <form className="form card fx-surface" onSubmit={submit}>
-            <label>Nome<input required autoComplete="name" value={form.nome} onChange={set('nome')} /></label>
-            <label>E-mail<input required type="email" autoComplete="email" value={form.email} onChange={set('email')} /></label>
-            <label>Telefone (opcional)<input type="tel" autoComplete="tel" value={form.telefone} onChange={set('telefone')} /></label>
-            <label>Mensagem<textarea required rows={5} value={form.mensagem} onChange={set('mensagem')} /></label>
+          <form className="form card fx-surface" onSubmit={submit} aria-busy={status === 'sending'}>
+            <fieldset className="form__fields" disabled={status === 'sending'}>
+              <label>Nome<input required minLength={2} autoComplete="name" placeholder="Seu nome completo" value={form.nome} onChange={set('nome')} /></label>
+              <label>E-mail<input required type="email" inputMode="email" autoComplete="email" placeholder="voce@email.com" value={form.email} onChange={set('email')} /></label>
+              <label>Telefone (opcional)<input type="tel" inputMode="tel" autoComplete="tel" placeholder="(11) 99999-9999" pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Formato: (11) 99999-9999" value={form.telefone} onChange={set('telefone')} /></label>
+              <label>
+                Mensagem
+                <textarea required minLength={10} rows={5} placeholder="Conte um pouco sobre o projeto ou a vaga…" value={form.mensagem} onChange={set('mensagem')} />
+                <span className="form__count">{form.mensagem.length}/{MAX_MSG}</span>
+              </label>
+            </fieldset>
             <input
               className="form__hp"
               name="website"
@@ -141,9 +173,16 @@ export default function Contact() {
               onChange={(e) => setHoneypot(e.target.value)}
             />
             <button type="submit" className="btn btn--primary" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Enviando…' : 'Enviar mensagem'}
+              {status === 'sending' ? (
+                <><span className="spinner" aria-hidden="true" /> Enviando…</>
+              ) : (
+                'Enviar mensagem'
+              )}
             </button>
             <div role="status" aria-live="polite">
+              {status === 'sending' && (
+                <p className="form__loading">Enviando sua mensagem, aguarde um instante…</p>
+              )}
               {status === 'success' && <p className="form__ok">Mensagem enviada! Retorno em breve.</p>}
               {status === 'mailto' && <p className="form__ok">Abrindo seu cliente de e-mail…</p>}
               {status === 'error' && (
